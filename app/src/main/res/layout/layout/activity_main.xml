@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:background="@color/bleuvert" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+           android:src="@drawable/personne"
+           android:id="@+id/profile"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:layout_alignParentStart="true"
+           android:layout_marginLeft="10dp"
+           android:layout_marginTop="18dp"/>
+   <TextView
+       android:text="Discussions"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/white"
+       android:textStyle="bold"
+       android:textSize="30sp"
+       android:layout_toRightOf="@id/profile"
+       android:layout_marginLeft="10dp"
+       android:layout_marginTop="15dp"/>
+
+         <ImageView
+             android:id="@+id/settings"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+            android:src="@drawable/settings"
+             android:scaleType="fitEnd"
+             android:adjustViewBounds="true"
+             android:layout_alignParentEnd="true"
+             android:layout_marginRight="10dp"
+             android:layout_marginTop="18dp" />
+
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/listonline"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/profile"
+           android:layout_marginStart="10dp"
+           android:layout_marginTop="7dp"
+           android:layout_marginEnd="10dp"
+           android:layout_marginBottom="5dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listonline"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        app:cardCornerRadius="60dp" >
+
+        <ListView
+            android:id="@+id/lsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginTop="15dp"/>
+    </androidx.cardview.widget.CardView>
+   </RelativeLayout>
+
+</LinearLayout>
