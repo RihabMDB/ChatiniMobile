@@ -18,10 +18,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.chatiniapp.Adapters.ConversationsAdapter;
 import com.example.chatiniapp.Adapters.MessageAdapter;
+import com.example.chatiniapp.ChatActivity;
+import com.example.chatiniapp.MainActivity;
 import com.example.chatiniapp.Models.Conversation;
 import com.example.chatiniapp.Models.Message;
 
@@ -50,10 +53,9 @@ public class ChatService extends Service {
     }
 
     public void getAllConversation(ListView ls){
-         url = url+"conversation/all/"+sharedPref.getInt("id", 0);
-
+         //url = url+"conversation/all/"+sharedPref.getInt("id", 0);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest= new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest= new StringRequest(Request.Method.GET,  url+"conversation/all/"+sharedPref.getInt("id", -1),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -64,6 +66,7 @@ public class ChatService extends Service {
                                 System.out.println("json_data : "+ json_data);
                                 Conversation c= new Conversation(
                                        json_data.getInt("id"),
+                                        json_data.getInt("senderId"),
                                         json_data.getString("senderName"),
                                         json_data.getString("senderImg"),
                                         json_data.getString("lastMsg"),
@@ -82,10 +85,6 @@ public class ChatService extends Service {
                         Toast.makeText(context, "error : "+ error.getMessage(), Toast.LENGTH_SHORT).show();
                     } }
         ){
-//            @Override
-//            public String getBodyContentType() {
-//                return "application/json; charset=utf-8";
-//            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
                 Map<String, String> params= new HashMap<String, String>();
@@ -97,12 +96,10 @@ public class ChatService extends Service {
         requestQueue.add(stringRequest);
     }
 
-
     public void getMessages(int idConv, RecyclerView rv){
-        url = url+"conversation/message/all/"+idConv;
         ArrayList<Message> listMsgs = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest= new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest= new StringRequest(Request.Method.GET, url+"conversation/message/all/"+idConv,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -131,10 +128,6 @@ public class ChatService extends Service {
                         Toast.makeText(context, "error : "+ error.getMessage(), Toast.LENGTH_SHORT).show();
                     } }
         ){
-            //            @Override
-//            public String getBodyContentType() {
-//                return "application/json; charset=utf-8";
-//            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
                 Map<String, String> params= new HashMap<String, String>();
@@ -144,6 +137,37 @@ public class ChatService extends Service {
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    public  void sendMessage(String message , int receiverId){
+        RequestQueue requestLogin = Volley.newRequestQueue(context);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("body", message);
+            postData.put("receiverID", receiverId);
+        } catch (JSONException e) { e.printStackTrace();   }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url+"conversation/message/send", postData ,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "error: "+error.toString(), Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                System.out.println(error.getMessage());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError{
+                Map<String, String> params= new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer "+ sharedPref.getString("accessToken", ""));
+                return params;
+            }
+        };
+        requestLogin.add(jsonObjectRequest);
     }
 
 }

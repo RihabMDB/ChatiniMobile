@@ -19,7 +19,8 @@
         android:textColor="#C0C0C0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_gchat_message_me"

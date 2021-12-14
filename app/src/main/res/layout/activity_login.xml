@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:layout_gravity="center_vertical"
     android:orientation="vertical"
     android:gravity="center_horizontal">
     <ImageView
@@ -14,7 +13,7 @@
         android:src="@drawable/logo2"
         android:layout_gravity="center"
         android:layout_marginBottom="25dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="40dp"/>
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
@@ -23,7 +22,6 @@
         android:layout_marginRight="40dp"
         android:hint="  username"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
         android:background="@drawable/edittextshape"
         android:paddingLeft="15dp"
         style="@style/Widget.AppCompat.EditText"

@@ -1,16 +1,41 @@
 package com.example.chatiniapp.Models;
 
 public class Conversation {
-    private int id;
+    private int id, senderId;
     private String senderName, senderImge, msg, date;
 
 
-    public Conversation(int id, String senderName, String senderImge, String msg, String date) {
+    public Conversation(int id, int senderId,  String senderName, String senderImge, String msg, String date) {
         this.id = id;
+        this.senderId=senderId;
         this.senderName = senderName;
         this.senderImge = senderImge;
         this.msg = msg;
         this.date = date;
+    }
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getSenderImge() {
+        return senderImge;
+    }
+
+    public void setSenderImge(String senderImge) {
+        this.senderImge = senderImge;
     }
 
     public String getName() {

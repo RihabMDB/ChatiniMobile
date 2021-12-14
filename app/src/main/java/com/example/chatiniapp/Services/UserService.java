@@ -3,14 +3,20 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Base64;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.chatiniapp.Adapters.OnlineUserAdapter;
@@ -22,12 +28,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-    public class UserService extends Service {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class UserService extends Service {
         Context context;
         String url="http://192.168.1.22:8080/api/";
         SharedPreferences sharedPref;
         ArrayList<User> listUsers = new ArrayList<>();
-      //  ArrayAdapter<User> adapter ;
+
         public UserService(Context context) {
             this.context= context;
             sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -84,5 +92,38 @@ import java.util.Map;
 
         }
 
+        public void getUserImage(int  id, CircleImageView profile){
+            url = "http://192.168.1.22:8080/api/"+"user/profile/by/"+id;
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            JsonObjectRequest stringRequest= new JsonObjectRequest(Request.Method.GET, url,null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if(response.getString("img")!=null){
+                                    byte[] imageID= android.util.Base64.decode(response.getString("img")   , Base64.DEFAULT);
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageID, 0, imageID.length);
+                                    profile.setImageBitmap(bitmap);}
+                                } catch (JSONException jsonException) {
+                                jsonException.printStackTrace();
+                            }
+                    }},
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("error : "+ error.getMessage());
+                        } }
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError{
+                    Map<String, String> params= new HashMap<String, String>();
+                    params.put("Content-Type", "application/json");
+                    params.put("Authorization", "Bearer "+ sharedPref.getString("accessToken", ""));
+                    return params;
+                }
+            };
+            requestQueue.add(stringRequest);
+
+        }
 
 }

@@ -9,6 +9,8 @@ public class User {
 
     private boolean isActive;
 
+    public User() {
+    }
 
     public User(int  id, String username, String img) {
         this.id=id;

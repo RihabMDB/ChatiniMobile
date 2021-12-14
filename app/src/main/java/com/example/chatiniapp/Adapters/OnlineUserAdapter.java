@@ -49,7 +49,6 @@ public class OnlineUserAdapter extends  RecyclerView.Adapter<OnlineUserAdapter.V
             return new ViewHolder(v);
         }
 
-
         @Override
         public void onBindViewHolder(OnlineUserAdapter.ViewHolder holder, int position) {
             User user= users.get(position);
@@ -59,8 +58,7 @@ public class OnlineUserAdapter extends  RecyclerView.Adapter<OnlineUserAdapter.V
                 byte[] imageID= android.util.Base64.decode(String.valueOf(user.getImg())   , Base64.DEFAULT);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageID, 0, imageID.length);
                 holder.img.setImageBitmap(bitmap);}
-            else
-                holder.img.setImageDrawable(context.getResources().getDrawable(R.drawable.logo));
+
 
             // Intent to DetailsActivity
             holder.img.setOnClickListener(new View.OnClickListener() {

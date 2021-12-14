@@ -51,24 +51,27 @@ public class ConversationsAdapter extends ArrayAdapter {
 
             //set attributes
             name.setText( conv.getName());
-            date.setText(conv.getDate());
+            date.setText(conv.getDate().substring(10, 16));
             msg.setText(conv.getMsg());
+
+            if(conv.getImg()!=null){
+                byte[] imageID= android.util.Base64.decode(String.valueOf(conv.getImg())   , Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageID, 0, imageID.length);
+                imageV.setImageBitmap(bitmap);}
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, ChatActivity.class);
                     i.putExtra("convId", conv.getId());
+                    i.putExtra("senderId", conv.getSenderId());
+                    i.putExtra("senderName", conv.getName());
+                    i.putExtra("senderImg", conv.getImg());
                     context.startActivity(i);
                 }
             });
-
-            if(conv.getImg()!=null){
-                byte[] imageID= android.util.Base64.decode(String.valueOf(conv.getImg())   , Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageID, 0, imageID.length);
-                imageV.setImageBitmap(bitmap);}
-            else
-                imageV.setImageDrawable(context.getResources().getDrawable(R.drawable.person));
             return view;
+
+
         }
 }
