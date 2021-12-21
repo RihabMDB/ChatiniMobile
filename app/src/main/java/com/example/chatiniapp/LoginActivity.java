@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chatiniapp.Services.RegistrationService;
@@ -46,6 +47,14 @@ public class LoginActivity extends AppCompatActivity {
 //                            password.getText().toString());
 //
 //                } else Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        TextView register = findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
     }

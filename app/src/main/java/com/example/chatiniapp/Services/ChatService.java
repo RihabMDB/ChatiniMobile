@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class ChatService extends Service {
     Context context;
-    String url="http://192.168.1.22:8080/api/";
+    String url="http://192.168.100.33:8080/api/";
     SharedPreferences sharedPref;
     ArrayList<Conversation> listConv = new ArrayList<>();
     ArrayAdapter<Conversation> adapter ;

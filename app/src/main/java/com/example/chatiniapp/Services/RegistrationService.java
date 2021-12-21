@@ -21,7 +21,7 @@ import org.json.JSONObject;
 public class RegistrationService extends Service {
 
     Context context; boolean bool;
-    String url="http://192.168.1.22:8080/api/";
+    String url="http://192.168.100.33:8080/api/";
     SharedPreferences sharedPref;
 
     public RegistrationService(Context context) {

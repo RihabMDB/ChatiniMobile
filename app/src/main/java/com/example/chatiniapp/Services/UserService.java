@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserService extends Service {
         Context context;
-        String url="http://192.168.1.22:8080/api/";
+        String url="http://192.168.100.33:8080/api/";
         SharedPreferences sharedPref;
         ArrayList<User> listUsers = new ArrayList<>();
 
