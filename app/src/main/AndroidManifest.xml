@@ -18,15 +18,12 @@
             android:name=".ChatActivity"
             android:exported="true" />
 
-        <service
-            android:name=".Services.UserService"
-            android:enabled="true"
-            android:exported="true"
-            tools:ignore="Instantiatable" />
 
         <activity
             android:name=".ProfileActivity"
-            android:exported="true" />
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:exported="true" />
@@ -55,8 +52,10 @@
             android:name=".SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            android:name=".HomeActivity"
+            android:exported="true" >
+
+        </activity>
     </application>
 
 </manifest>

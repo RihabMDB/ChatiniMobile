@@ -1,14 +1,10 @@
 package com.example.chatiniapp.Services;
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Base64;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
@@ -30,21 +26,16 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserService extends Service {
+public class UserService  {
         Context context;
-        String url="http://192.168.100.33:8080/api/";
+        String url="http://192.168.1.19:8080/api/";
         SharedPreferences sharedPref;
         ArrayList<User> listUsers = new ArrayList<>();
+
 
         public UserService(Context context) {
             this.context= context;
             sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        }
-
-        @Override
-        public IBinder onBind(Intent intent) {
-            // TODO: Return the communication channel to the service.
-            throw new UnsupportedOperationException("Not yet implemented");
         }
 
         public void getOnlineUsers(RecyclerView rv){
@@ -93,37 +84,38 @@ public class UserService extends Service {
         }
 
         public void getUserImage(int  id, CircleImageView profile){
-            url = "http://192.168.1.22:8080/api/"+"user/profile/by/"+id;
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-            JsonObjectRequest stringRequest= new JsonObjectRequest(Request.Method.GET, url,null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                if(response.getString("img")!=null){
-                                    byte[] imageID= android.util.Base64.decode(response.getString("img")   , Base64.DEFAULT);
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageID, 0, imageID.length);
-                                    profile.setImageBitmap(bitmap);}
-                                } catch (JSONException jsonException) {
-                                jsonException.printStackTrace();
-                            }
+        url = url+"user/profile/by/"+id;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest stringRequest= new JsonObjectRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.getString("img")!=null){
+                                byte[] imageID= android.util.Base64.decode(response.getString("img")   , Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageID, 0, imageID.length);
+                                profile.setImageBitmap(bitmap);}
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
                     }},
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            System.out.println("error : "+ error.getMessage());
-                        } }
-            ){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError{
-                    Map<String, String> params= new HashMap<String, String>();
-                    params.put("Content-Type", "application/json");
-                    params.put("Authorization", "Bearer "+ sharedPref.getString("accessToken", ""));
-                    return params;
-                }
-            };
-            requestQueue.add(stringRequest);
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("error : "+ error.getMessage());
+                    } }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError{
+                Map<String, String> params= new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer "+ sharedPref.getString("accessToken", ""));
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
 
-        }
+    }
+
 
 }

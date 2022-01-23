@@ -38,7 +38,9 @@
         android:layout_marginBottom="16dp"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/text_gchat_indicator"
-        app:layout_constraintTop_toBottomOf="@+id/layout_group_chat" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_group_chat"
+        app:stackFromEnd="true"
+        app:reverseLayout="true"/>
 
     <TextView
         android:id="@+id/text_gchat_indicator"

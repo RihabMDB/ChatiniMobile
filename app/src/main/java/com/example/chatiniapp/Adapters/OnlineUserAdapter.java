@@ -65,7 +65,9 @@ public class OnlineUserAdapter extends  RecyclerView.Adapter<OnlineUserAdapter.V
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, ChatActivity.class );
-                   // i.putExtra("formation", user);
+                    i.putExtra("senderId", user.getId());
+                    i.putExtra("senderName", user.getUsername());
+                    i.putExtra("senderImg", user.getImg());
                     context.startActivity(i);
                 }
             });

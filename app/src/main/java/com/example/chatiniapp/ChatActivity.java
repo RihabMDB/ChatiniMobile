@@ -41,7 +41,9 @@ public class ChatActivity extends AppCompatActivity {
         RecyclerView messageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
 
         // Get messages
-        chatService.getMessages(idConv , messageRecycler);
+        if (idConv!=0)
+        chatService.getMessagesByConv(idConv , messageRecycler);
+        else  chatService.getMessagesByUsers(getIntent().getExtras().getString("senderName") , messageRecycler);
         messageRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL  , false));
 
         // Send Message

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".HomeActivity"
     android:orientation="vertical">
 
 
@@ -37,16 +37,16 @@
        android:layout_marginLeft="10dp"
        android:layout_marginTop="15dp"/>
 
-         <ImageView
-             android:id="@+id/settings"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-            android:src="@drawable/settings"
-             android:scaleType="fitEnd"
-             android:adjustViewBounds="true"
-             android:layout_alignParentEnd="true"
-             android:layout_marginRight="10dp"
-             android:layout_marginTop="18dp" />
+       <ImageView
+           android:id="@+id/logout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentEnd="true"
+           android:layout_marginTop="18dp"
+           android:layout_marginRight="10dp"
+           android:adjustViewBounds="true"
+           android:scaleType="fitEnd"
+           android:src="@drawable/logout" />
 
 
        <androidx.recyclerview.widget.RecyclerView
@@ -55,7 +55,7 @@
            android:layout_height="wrap_content"
            android:layout_below="@id/profile"
            android:layout_marginStart="10dp"
-           android:layout_marginTop="7dp"
+           android:layout_marginTop="10dp"
            android:layout_marginEnd="10dp"
            android:layout_marginBottom="5dp" />
 
